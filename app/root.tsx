@@ -11,7 +11,7 @@ import type { LinksFunction } from "@remix-run/cloudflare";
 
 import { Navbar } from "./components/ui/navbar";
 
-import "./tailwind.css";
+import styles from "./tailwind.css?url";
 
 export function ErrorBoundary() {
   const error = useRouteError();
@@ -47,7 +47,22 @@ export const links: LinksFunction = () => [
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
+  {
+    rel: "stylesheet",
+    href: styles,
+  },
 ];
+
+import type { ReactNode } from "react";
+
+export function Layout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en">
+      <head></head>
+      <body>{children}</body>
+    </html>
+  );
+}
 
 export default function App() {
   return (
@@ -68,5 +83,13 @@ export default function App() {
         </div>
       </body>
     </html>
+  );
+}
+
+export function HydrateFallback() {
+  return (
+    <Layout>
+      <p>Loading...</p>
+    </Layout>
   );
 }
