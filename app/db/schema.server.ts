@@ -6,12 +6,12 @@ import {
   primaryKey,
 } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-import { comment } from "postcss";
 
 // users table
 export const users = sqliteTable("users", {
   id: text("id").primaryKey(),
   email: text("email").notNull().unique(),
+  // ethAddress: text("eth_address").notNull().unique(), // XX
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()
     .default(sql`(unixepoch())`),
@@ -25,12 +25,12 @@ export const selectUserSchema = createSelectSchema(users);
 export const posts = sqliteTable("posts", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   title: text("title").notNull(),
-  url: text("url").unique(),
+  url: text("url").unique().notNull(),
   text: text("text"),
   score: integer("score").notNull().default(0),
   userId: text("user_id")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+    .references(() => users.id),
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()
     .default(sql`(unixepoch())`),
@@ -44,12 +44,12 @@ export const selectPostSchema = createSelectSchema(posts);
 export const comments = sqliteTable("comments", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   text: text("text").notNull(),
-  userId: integer("user_id")
+  userId: text("user_id")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+    .references(() => users.id),
   postId: integer("post_id")
     .notNull()
-    .references(() => posts.id, { onDelete: "cascade" }),
+    .references(() => posts.id),
   parentId: integer("parent_id").references((): any => comments.id),
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()
@@ -64,10 +64,10 @@ export const votes = sqliteTable(
   {
     userId: integer("user_id")
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+      .references(() => users.id),
     postId: integer("post_id")
       .notNull()
-      .references(() => posts.id, { onDelete: "cascade" }),
+      .references(() => posts.id),
     createdAt: integer("created_at", { mode: "timestamp" })
       .notNull()
       .default(sql`(unixepoch())`),

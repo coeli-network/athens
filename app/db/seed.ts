@@ -4,6 +4,7 @@ import { posts, users, comments, votes } from "./schema.server";
 import { sql } from "drizzle-orm";
 
 const ids = [
+  "zod",
   "mastyr-bottec",
   "lagrev-nocfep",
   "wolrus-ridrup",
