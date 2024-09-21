@@ -13,6 +13,9 @@ import { Navbar } from "./components/ui/navbar";
 
 import styles from "./tailwind.css?url";
 
+import { useEffect } from "react";
+import { coinbaseWallet } from "~/utils/coinbaseWallet";
+
 export function ErrorBoundary() {
   const error = useRouteError();
   return (
@@ -65,6 +68,13 @@ export function Layout({ children }: { children: ReactNode }) {
 }
 
 export default function App() {
+  useEffect(() => {
+    // Initialize the provider when the app loads on the client side
+    if (coinbaseWallet) {
+      coinbaseWallet.request({ method: "eth_requestAccounts" });
+    }
+  }, []);
+
   return (
     <html lang="en">
       <head>
