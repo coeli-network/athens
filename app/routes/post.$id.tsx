@@ -54,7 +54,7 @@ export default function Post() {
           <input type="hidden" name="postId" value={post.id} />
           <textarea
             name="comment"
-            className="w-full p-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-black dark:text-white"
+            className="w-full p-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-950 text-black dark:text-white"
             rows={4}
             placeholder="Write your comment here..."
           ></textarea>
@@ -71,7 +71,10 @@ export default function Post() {
         <h2 className="text-xl font-semibold mb-4">Comments</h2>
         {comments.length > 0 ? (
           comments.map(comment => (
-            <div key={comment.id} className="mb-4 p-4 border border-gray-700">
+            <div
+              key={comment.id}
+              className="mb-4 p-4 border border-gray-300 dark:border-gray-700"
+            >
               <p className="font-semibold">
                 {comment.userId}{" "}
                 <span className="text-sm text-gray-500">
