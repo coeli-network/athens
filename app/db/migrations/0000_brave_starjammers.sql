@@ -1,7 +1,7 @@
 CREATE TABLE `comments` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`text` text NOT NULL,
-	`user_id` integer NOT NULL,
+	`user_id` text NOT NULL,
 	`post_id` integer NOT NULL,
 	`parent_id` integer,
 	`created_at` integer DEFAULT (unixepoch()) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE `comments` (
 CREATE TABLE `posts` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`title` text NOT NULL,
-	`url` text NOT NULL,
+	`url` text,
 	`text` text,
 	`score` integer DEFAULT 0 NOT NULL,
 	`user_id` text NOT NULL,

@@ -3,7 +3,7 @@ import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { Form, Link, useLoaderData } from "@remix-run/react";
 import {
   readFullPost,
-  type Post,
+  type PostComments,
   type PostWithComments,
 } from "~/models/post.server";
 import { createComment } from "~/models/comment.server";
@@ -41,7 +41,7 @@ export default function Post() {
     <div className="max-w-2xl mx-auto p-4">
       <div>
         <h1 className="text-2xl font-bold">
-          <Link to={post.url}>{post.title}</Link>
+          <Link to={post.url || `/post/${post.id}`}>{post.title}</Link>
         </h1>
         <div className="mt-4">
           <p>{post.text}</p>

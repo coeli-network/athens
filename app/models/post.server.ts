@@ -6,17 +6,20 @@ import { db } from "~/db.server";
 import { comments, posts } from "~/db/schema.server";
 import { Comment } from "./comment.server";
 
-export const PostSchema = createSelectSchema(posts).extend({
-  commentCount: z.number(),
-});
+export const PostSchema = createSelectSchema(posts);
 export type Post = z.infer<typeof PostSchema>;
 
+export const PostCommentsSchema = createSelectSchema(posts).extend({
+  commentCount: z.number(),
+});
+export type PostComments = z.infer<typeof PostCommentsSchema>;
+
 export type PostWithComments = {
-  post: Post;
+  post: PostComments;
   comments: Comment[];
 };
 
-export async function readPosts(n: number = 1): Promise<Post[]> {
+export async function readPosts(n: number = 1): Promise<PostComments[]> {
   const rawPosts = await db
     .select({
       id: posts.id,
@@ -37,7 +40,7 @@ export async function readPosts(n: number = 1): Promise<Post[]> {
     .limit(n)
     .all();
 
-  return z.array(PostSchema).parse(rawPosts);
+  return z.array(PostCommentsSchema).parse(rawPosts);
 }
 
 // Read a post with all its comments.
@@ -73,4 +76,25 @@ export async function readFullPost(postId: number): Promise<PostWithComments> {
     .all();
 
   return { post: postItem, comments: commentItems };
+}
+
+export type CreatePostParams = Pick<Post, "title" | "url" | "text">;
+
+export async function createPost({
+  title,
+  url,
+  text,
+}: CreatePostParams): Promise<Post> {
+  const newPost = await db
+    .insert(posts)
+    .values({
+      title,
+      url,
+      text,
+      userId: "~zod", // TODO: implement auth
+    })
+    .returning()
+    .get();
+
+  return PostSchema.parse(newPost);
 }

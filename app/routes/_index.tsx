@@ -1,13 +1,17 @@
 import { json, type LoaderFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import { readPosts, type Post, PostSchema } from "~/models/post.server";
+import {
+  readPosts,
+  type PostComments,
+  PostCommentsSchema,
+} from "~/models/post.server";
 
 type LoaderData = {
-  posts: Post[];
+  posts: PostComments[];
 };
 
 export const loader: LoaderFunction = async () => {
-  return json<LoaderData>({ posts: await readPosts(10) });
+  return json<LoaderData>({ posts: await readPosts(50) });
 };
 
 function hoursAgo(date: string) {

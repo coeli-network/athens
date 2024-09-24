@@ -25,7 +25,7 @@ export const selectUserSchema = createSelectSchema(users);
 export const posts = sqliteTable("posts", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   title: text("title").notNull(),
-  url: text("url").unique().notNull(),
+  url: text("url").unique(),
   text: text("text"),
   score: integer("score").notNull().default(0),
   userId: text("user_id")

@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "729567cc-073d-4820-a577-b636775d84f0",
+  "id": "746ab48f-975a-4ffb-894f-a9d10d56d3fc",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "comments": {
@@ -23,7 +23,7 @@
         },
         "user_id": {
           "name": "user_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -117,7 +117,7 @@
           "name": "url",
           "type": "text",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         },
         "text": {
