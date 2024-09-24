@@ -10,8 +10,8 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 // users table
 export const users = sqliteTable("users", {
   id: text("id").primaryKey(),
-  email: text("email").notNull().unique(),
-  // ethAddress: text("eth_address").notNull().unique(), // XX
+  email: text("email").unique(),
+  address: text("address").notNull().unique(),
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()
     .default(sql`(unixepoch())`),

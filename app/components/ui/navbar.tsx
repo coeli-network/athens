@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Link } from "@remix-run/react";
+import { Link, useFetcher } from "@remix-run/react";
 import { coinbaseWallet } from "~/utils/coinbaseWallet";
 
 export function Navbar() {
   const [address, setAddress] = useState<string | null>(null);
+  const fetcher = useFetcher();
 
   useEffect(() => {
     if (!coinbaseWallet) return;
@@ -37,6 +38,12 @@ export function Navbar() {
         method: "eth_requestAccounts",
       })) as string[];
       setAddress(accounts[0]);
+
+      // Submit the address to the auth route
+      fetcher.submit(
+        { address: accounts[0] },
+        { method: "post", action: "/auth" }
+      );
     } catch (error) {
       console.error("Failed to connect", error);
     }

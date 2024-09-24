@@ -31,20 +31,19 @@ const submissions = [
 
 async function seed() {
   for (let id of ids) {
-    const u = db
+    await db
       .insert(users)
       .values({
         id: `~${id}`,
         email: `${id}@urbit.box`,
+        address: `0x${ids.indexOf(id).toString(16).padStart(2, "0")}`,
       })
-      .onConflictDoNothing()
-      .returning()
-      .get();
+      .onConflictDoNothing();
   }
   console.log(`Added ${ids.length} users`);
 
   for (let post of submissions) {
-    const p = db
+    await db
       .insert(posts)
       .values({
         title: post.title,
@@ -52,9 +51,7 @@ async function seed() {
         text: "This is a test post",
         userId: `~${ids[Math.floor(Math.random() * ids.length)]}`,
       })
-      .onConflictDoNothing()
-      .returning()
-      .get();
+      .onConflictDoNothing();
   }
   console.log(`Added ${submissions.length} posts`);
   console.log("Seeding complete");

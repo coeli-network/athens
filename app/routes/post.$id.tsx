@@ -7,6 +7,7 @@ import {
   type PostWithComments,
 } from "~/models/post.server";
 import { createComment, deleteComment } from "~/models/comment.server";
+import { readUser } from "~/models/user.server";
 
 type LoaderData = PostWithComments;
 
@@ -103,7 +104,7 @@ export default function Post() {
             </div>
           ))
         ) : (
-          <p>No comments yet. Be the first to comment!</p>
+          <p>No comments yet.</p>
         )}
       </div>
     </div>
