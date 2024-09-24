@@ -23,20 +23,18 @@ export default function Index() {
 
   return (
     <div>
-      <ol className="list-decimal list-inside">
+      <ol className="list-decimal list-outside ml-6">
         {posts.map(post => (
           <li key={post.id} className="mb-2">
-            <Link to={post.url || `/post/${post.id}`}>
+            <Link to={post.url || `/post/${post.id}`} className="inline-block">
               {post.title}
-              <div className="text-sm text-gray-500">
-                {post.score} points by{" "}
-                <Link to={`/user/${post.userId}`}>{post.userId}</Link>{" "}
-                {hoursAgo(post.createdAt)}
-                <Link to={`/post/${post.id}`}>
-                  {post.commentCount} comments
-                </Link>
-              </div>
             </Link>
+            <div className="text-sm text-gray-500 ml-0">
+              {post.score} points by{" "}
+              <Link to={`/user/${post.userId}`}>{post.userId}</Link>{" "}
+              {hoursAgo(post.createdAt)}
+              <Link to={`/post/${post.id}`}>{post.commentCount} comments</Link>
+            </div>
           </li>
         ))}
       </ol>

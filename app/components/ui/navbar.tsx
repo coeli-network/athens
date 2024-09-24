@@ -15,7 +15,7 @@ export function Navbar() {
         })) as string[];
         setAddress(accounts[0] || null);
       } catch (error) {
-        console.error("Failed to get accounts", error);
+        console.log("No accounts connected yet");
       }
     };
 
@@ -66,14 +66,10 @@ export function Navbar() {
                 <span>
                   {address.slice(0, 6)}...{address.slice(-4)}
                 </span>
-                <Link to="#" onClick={disconnectWallet}>
-                  Disconnect
-                </Link>
+                <button onClick={disconnectWallet}>Disconnect</button>
               </>
             ) : (
-              <Link to="#" onClick={connectWallet}>
-                Connect
-              </Link>
+              <button onClick={connectWallet}>Connect</button>
             )}
           </div>
         </div>

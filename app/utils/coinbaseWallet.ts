@@ -1,7 +1,14 @@
 import { CoinbaseWalletSDK } from "@coinbase/wallet-sdk";
+import { ProviderInterface } from "@coinbase/wallet-sdk/dist/core/provider/interface";
 
-let sdk: CoinbaseWalletSDK | null = null;
-let coinbaseWallet: any = null;
+let SUPPORTED_CHAINS = [
+  // 1,     // Ethereum Mainnet
+  // 8453,  // Base Mainnet
+  84532, // Base Sepolia
+];
+
+let sdk: CoinbaseWalletSDK;
+let coinbaseWallet: ProviderInterface;
 
 // client-side only
 if (typeof window !== "undefined") {
@@ -9,7 +16,7 @@ if (typeof window !== "undefined") {
     appName: "Athens",
     appLogoUrl:
       "https://bwyl.nyc3.digitaloceanspaces.com/radio/chat_images/athens.gif",
-    appChainIds: [84532], // Base Sepolia chain ID
+    appChainIds: SUPPORTED_CHAINS,
   });
 
   coinbaseWallet = sdk.makeWeb3Provider();

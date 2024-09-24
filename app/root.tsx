@@ -58,15 +58,6 @@ import type { ReactNode } from "react";
 export function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <head></head>
-      <body>{children}</body>
-    </html>
-  );
-}
-
-export default function App() {
-  return (
-    <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -76,20 +67,24 @@ export default function App() {
       </head>
       <body>
         <Navbar />
-        <div className="container mx-auto p-4">
-          <ScrollRestoration />
-          <Scripts />
-          <Outlet />
-        </div>
+        <div className="container mx-auto p-4">{children}</div>
+        <Scripts />
+        <ScrollRestoration />
       </body>
     </html>
   );
 }
 
+export default function App() {
+  return <Outlet />;
+}
+
 export function HydrateFallback() {
   return (
     <Layout>
-      <p>Loading...</p>
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
     </Layout>
   );
 }
