@@ -6,7 +6,7 @@ import {
   type PostComments,
   type PostWithComments,
 } from "~/models/post.server";
-import { createComment } from "~/models/comment.server";
+import { createComment, deleteComment } from "~/models/comment.server";
 
 type LoaderData = PostWithComments;
 
@@ -22,6 +22,13 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const postId = Number(formData.get("postId"));
   const commentText = formData.get("comment");
+  const action = formData.get("action");
+  const commentId = formData.get("commentId");
+
+  if (action === "delete" && commentId) {
+    await deleteComment(Number(commentId));
+    return redirect(`/post/${postId}`);
+  }
 
   if (!postId) {
     return json({ error: "Post ID is required" }, { status: 400 });
@@ -73,7 +80,7 @@ export default function Post() {
           comments.map(comment => (
             <div
               key={comment.id}
-              className="mb-4 p-4 border border-gray-300 dark:border-gray-700"
+              className="mb-4 p-4 border border-gray-300 dark:border-gray-700 relative"
             >
               <p className="font-semibold">
                 {comment.userId}{" "}
@@ -82,6 +89,17 @@ export default function Post() {
                 </span>
               </p>
               <p>{comment.text}</p>
+              <Form method="post" className="absolute top-2 right-2">
+                <input type="hidden" name="postId" value={post.id} />
+                <input type="hidden" name="commentId" value={comment.id} />
+                <input type="hidden" name="action" value="delete" />
+                <button
+                  type="submit"
+                  className="text-sm text-gray-500 hover:text-gray-700"
+                >
+                  delete
+                </button>
+              </Form>
             </div>
           ))
         ) : (

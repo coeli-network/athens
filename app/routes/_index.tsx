@@ -22,6 +22,15 @@ function hoursAgo(date: string) {
   return `${hours} hours ago `;
 }
 
+function getBaseDomain(url: string): string {
+  try {
+    const { hostname } = new URL(url);
+    return hostname;
+  } catch {
+    return "";
+  }
+}
+
 export default function Index() {
   const { posts } = useLoaderData<LoaderData>();
 
@@ -33,6 +42,11 @@ export default function Index() {
             <Link to={post.url || `/post/${post.id}`} className="inline-block">
               {post.title}
             </Link>
+            {post.url && (
+              <span className="text-sm text-gray-500 ml-1">
+                ({getBaseDomain(post.url)})
+              </span>
+            )}
             <div className="text-sm text-gray-500 ml-0">
               {post.score} points by{" "}
               <Link to={`/user/${post.userId}`}>{post.userId}</Link>{" "}

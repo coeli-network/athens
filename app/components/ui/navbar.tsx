@@ -57,7 +57,7 @@ export function Navbar() {
             <Link to="/">Athens</Link>
           </h1>
           <div className="flex space-x-4 text-sm">
-            <Link to="/new">New</Link>
+            <Link to="/submit">Submit</Link>
             <Link to="/threads">Threads</Link>
             <Link to="/comments">Comments</Link>
             <Link to="/ask">Ask</Link>
