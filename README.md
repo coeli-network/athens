@@ -5,6 +5,20 @@
 
 ## Development
 
+Create a `.env` file in the root:
+
+```sh
+DATABASE_URL="./app/db/data.db"
+```
+
+Prepare the local database:
+
+```sh
+npm run db:generate
+npm run db:push
+npm run db:seed
+```
+
 Run the dev server:
 
 ```sh
