@@ -10,38 +10,48 @@ export type User = z.infer<typeof UserSchema>;
 
 type CreateUserParams = {
   id: string;
-  email: string | undefined;
   address: string;
 };
 
 export async function createUser({
   id,
-  email,
   address,
 }: CreateUserParams): Promise<User> {
   const existingUser = await readUser(id);
   if (existingUser) {
     throw new Error(`User with id ${id} already exists`);
   }
-  return db.insert(users).values({ id, email, address }).returning().get();
+  console.log("Creating user", id, address);
+  try {
+    const user = await db
+      .insert(users)
+      .values({ id, address })
+      .returning()
+      .get();
+    console.log("User created successfully", user);
+    return user;
+  } catch (error) {
+    console.error("Error creating user:", error);
+    if (error instanceof Error) {
+      throw new Error(`Failed to create user: ${error.message}`);
+    } else {
+      throw new Error("Failed to create user: Unknown error");
+    }
+  }
 }
 
 export async function readUser(id: string): Promise<User | undefined> {
   return db.select().from(users).where(eq(users.id, id)).get();
 }
 
-export async function updateUser(
-  id: string,
-  email: string | undefined,
-  address: string
-): Promise<User> {
+export async function updateUser(id: string, address: string): Promise<User> {
   const existingUser = await readUser(id);
   if (!existingUser) {
     throw new Error(`User with id ${id} does not exist`);
   }
   return db
     .update(users)
-    .set({ email, address })
+    .set({ address })
     .where(eq(users.id, id))
     .returning()
     .get();

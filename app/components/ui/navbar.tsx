@@ -19,7 +19,6 @@ export function Navbar() {
         console.log("No accounts connected yet");
       }
     };
-
     checkConnection();
     coinbaseWallet.on("accountsChanged", (accounts: string[]) => {
       setAddress(accounts[0] || null);

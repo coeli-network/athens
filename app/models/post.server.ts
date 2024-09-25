@@ -91,7 +91,7 @@ export async function createPost({
       title,
       url,
       text,
-      userId: "~zod", // TODO: implement auth
+      userId: "~zod", // XX implement auth
     })
     .returning()
     .get();

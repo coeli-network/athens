@@ -10,14 +10,14 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 // users table
 export const users = sqliteTable("users", {
   id: text("id").primaryKey(),
-  email: text("email").unique(),
   address: text("address").notNull().unique(),
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()
     .default(sql`(unixepoch())`),
 });
 export const insertUserSchema = createInsertSchema(users, {
-  email: schema => schema.email.email(),
+  id: schema => schema.id,
+  address: schema => schema.address,
 });
 export const selectUserSchema = createSelectSchema(users);
 

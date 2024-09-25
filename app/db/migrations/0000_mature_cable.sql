@@ -23,7 +23,6 @@ CREATE TABLE `posts` (
 --> statement-breakpoint
 CREATE TABLE `users` (
 	`id` text PRIMARY KEY NOT NULL,
-	`email` text NOT NULL,
 	`address` text NOT NULL,
 	`created_at` integer DEFAULT (unixepoch()) NOT NULL
 );
@@ -38,5 +37,4 @@ CREATE TABLE `votes` (
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `posts_url_unique` ON `posts` (`url`);--> statement-breakpoint
-CREATE UNIQUE INDEX `users_email_unique` ON `users` (`email`);--> statement-breakpoint
 CREATE UNIQUE INDEX `users_address_unique` ON `users` (`address`);

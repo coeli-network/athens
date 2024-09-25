@@ -1,5 +1,5 @@
 import { json, LoaderFunction, ActionFunction } from "@remix-run/node";
-import { getUrbitIDs } from "~/utils/coinbaseWallet.server";
+import { getOwnedIds } from "~/utils/coinbaseWallet.server";
 import { createUser, readUser } from "~/models/user.server";
 import { redirect } from "@remix-run/node";
 import { getSession, commitSession } from "~/sessions";
@@ -19,21 +19,23 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export const action: ActionFunction = async ({ request }) => {
+  console.log("action /auth");
   const formData = await request.formData();
   const address = formData.get("address") as string;
 
   if (!address) {
+    console.log("Address is required");
     return json({ error: "Address is required" }, { status: 400 });
   }
 
   try {
-    const urbitIDs = await getUrbitIDs(address);
-    const userId = urbitIDs[0]; // Use the first Urbit ID as the user ID
+    const ids = await getOwnedIds(address);
+    const userId = ids[0]; // XX implement ID picker
     console.log("userId", userId);
 
     let user = await readUser(userId);
     if (!user) {
-      user = await createUser({ id: userId, email: undefined, address });
+      user = await createUser({ id: userId, address });
     }
 
     const session = await getSession(request.headers.get("Cookie"));

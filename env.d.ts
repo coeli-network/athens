@@ -4,3 +4,4 @@ declare module "__STATIC_CONTENT_MANIFEST" {
 }
 
 declare module "azimuth-js";
+declare module "urbit-ob";

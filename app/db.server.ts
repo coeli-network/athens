@@ -8,14 +8,22 @@ if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL is not set");
 }
 
-const sqlite = new Database(process.env.DATABASE_URL);
+const sqlite = new Database(process.env.DATABASE_URL, { fileMustExist: true });
+
+// Enable WAL mode for better concurrency
+sqlite.pragma("journal_mode = WAL");
 
 export const db = drizzle(sqlite, { schema });
 
+// Run migrations
 migrate(db, { migrationsFolder: "./app/db/migrations" });
 
+// Function to get a new database connection
 export function getDb() {
-  const newSqlite = new Database(process.env.DATABASE_URL);
+  const newSqlite = new Database(process.env.DATABASE_URL, {
+    fileMustExist: true,
+  });
+  newSqlite.pragma("journal_mode = WAL");
   return drizzle(newSqlite, { schema });
 }
 

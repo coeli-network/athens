@@ -35,7 +35,6 @@ async function seed() {
       .insert(users)
       .values({
         id: `~${id}`,
-        email: `${id}@urbit.box`,
         address: `0x${ids.indexOf(id).toString(16).padStart(2, "0")}`,
       })
       .onConflictDoNothing();
