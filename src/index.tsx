@@ -3,32 +3,34 @@ import { renderer } from "@/middleware/renderer";
 
 const app = new Hono();
 
-app.get("/data", (c) => {
-  return c.render(
-    <div>
-      <p className="font-bold underline">{new Date().toISOString()}</p>
-      <button hx-get="/" hx-target="body">
-        Close
-      </button>
-    </div>
-  );
-});
-
 app.get("*", renderer);
+
 app.get("/", (c) => {
   return c.render(
-    <div
-      hx-boost="true"
-      className="flex flex-col items-center justify-center h-screen text-center"
-    >
-      <h1 className="text-3xl font-bold text-red-500">Hello World!</h1>
-      <button hx-get="/data" hx-target="#data-container">
-        Fetch Data
-      </button>
-      <div className="mt-8" id="data-container">
-        No data fetched yet...
+    <>
+      <div className="flex justify-between items-center p-4">
+        <h1 className="text-xl font-bold">Athens</h1>
+        <nav>
+          <ul className="flex space-x-4">
+            <li>
+              <a href="/submit">submit</a>
+            </li>
+            <li>
+              <a href="/new">new</a>
+            </li>
+            <li>
+              <a href="/comments">comments</a>
+            </li>
+            <li>
+              <a href="/login">login</a>
+            </li>
+          </ul>
+        </nav>
       </div>
-    </div>
+      <div className="container mx-auto px-4 mt-8">
+        <p>No posts yet...</p>
+      </div>
+    </>
   );
 });
 
