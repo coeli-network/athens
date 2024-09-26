@@ -1,15 +1,16 @@
 {
-  "name": "athens-pages",
+  "name": "athens",
   "type": "module",
   "scripts": {
+    "db:generate": "drizzle-kit generate",
+    "db:migrate:local": "wrangler d1 migrations apply athens --local",
+    "db:migrate:remote": "wrangler d1 migrations apply athens --remote",
     "dev": "vite",
     "build": "vite build --mode bundle && vite build",
     "preview": "wrangler pages dev dist",
     "deploy": "$npm_execpath run build && wrangler pages deploy dist"
   },
   "dependencies": {
-    "better-sqlite3": "^11.3.0",
-    "drizzle-kit": "^0.24.2",
     "drizzle-orm": "^0.33.0",
     "drizzle-zod": "^0.5.1",
     "hono": "^4.6.3",
@@ -21,6 +22,7 @@
     "@hono/vite-build": "^1.0.0",
     "@hono/vite-dev-server": "^0.15.1",
     "autoprefixer": "^10.4.20",
+    "drizzle-kit": "^0.24.2",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.13",
     "vite": "^5.2.12",

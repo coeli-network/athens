@@ -1,4 +1,4 @@
-name = "athens-pages"
+name = "athens"
 compatibility_date = "2024-09-26"
 pages_build_output_dir = "./dist"
 compatibility_flags = [ "nodejs_compat" ]
@@ -14,10 +14,11 @@ compatibility_flags = [ "nodejs_compat" ]
 # binding = "MY_BUCKET"
 # bucket_name = "my-bucket"
 
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "my-database"
-# database_id = ""
+[[d1_databases]]
+binding = "DB"
+database_name = "athens"
+database_id = "4333e894-c5dc-4eec-a219-dde7b3822112"
+migrations_dir = "./src/db/migrations"
 
 # [ai]
 # binding = "AI"
