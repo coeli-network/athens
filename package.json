@@ -15,16 +15,25 @@
     "drizzle-zod": "^0.5.1",
     "hono": "^4.6.3",
     "htmx.org": "^1.9.12",
+    "urbit-key-generation": "^0.20.1",
+    "urbit-ob": "^5.0.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240529.0",
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@hono/vite-build": "^1.0.0",
     "@hono/vite-dev-server": "^0.15.1",
     "autoprefixer": "^10.4.20",
+    "buffer": "^6.0.3",
     "drizzle-kit": "^0.24.2",
+    "events": "^3.3.0",
     "postcss": "^8.4.47",
+    "process": "^0.11.10",
+    "stream-browserify": "^3.0.0",
     "tailwindcss": "^3.4.13",
+    "util": "^0.12.5",
     "vite": "^5.2.12",
     "wrangler": "^3.57.2"
   }
